@@ -43,7 +43,7 @@ proc DS9Def {} {
 	    # bad system fonts returned by Mojave
 	    set ds9(helvetica) {.AppleSystemUIFont}
 	    set ds9(times) times
-	}	    
+	}
 	win32 {
 	    set ds9(times) times
 	}
@@ -191,8 +191,10 @@ set ds9(mb) .mb
 # pre package load
 switch $ds9(wm) {
     x11 {
-	set ds9(root) "[::tcl::zipfs::root]mntpt"
-	set auto_path [list $ds9(root) $ds9(root)/tcl8.6 $ds9(root)/tk8.6 $ds9(root)/tk8.6/ttk]
+    set aaa [file normalize [info nameofexecutable]]
+    set bbb [file dirname $aaa]
+    set ds9(root) [file normalize [append bbb "/../lib/ds9"]]
+	set auto_path [list $ds9(root) $ds9(root)/tcl8.6 $ds9(root)/tk8.6 $ds9(root)/tk8.6/ttk $ds9(root)/tcl8/8.4 $ds9(root)/tcl8/8.5 $ds9(root)/tcl8/8.6]
     }
     aqua {
 	# set to absolute path
@@ -359,7 +361,7 @@ CrosshairDef
 CubeDef
 CurrentDef
 CursorDef
-DebugDef 
+DebugDef
 ESODef
 ExamineDef
 ExportDef
@@ -484,7 +486,7 @@ switch $ds9(wm) {
 	if {$ds9(depth)==32} {
 	    set ds9(depth) 24
 	}
-    } 
+    }
     aqua {
 	if {$ds9(depth)==15} {
 	    set ds9(depth) 16

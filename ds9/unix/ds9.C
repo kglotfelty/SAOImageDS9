@@ -52,8 +52,13 @@ extern "C" {
 }
 
 // currently use relative path
-// using full path with spaces causes problems 
+// using full path with spaces causes problems
 // with htmwidget and tcl/tk
+
+#define PATHSIZE 2048
+
+char my_tcl_library_path[PATHSIZE+1];
+
 
 int SAOLocalMainHook(int* argcPtr, char*** argvPtr)
 {
@@ -63,13 +68,41 @@ int SAOLocalMainHook(int* argcPtr, char*** argvPtr)
   // do this first
   Tcl_FindExecutable((*argvPtr)[0]);
 
+
+  // use exec path
+  char** argv = *argvPtr;
+  char ss[PATHSIZE+1];
+  memset(ss, 0, PATHSIZE+1);
+  strncpy(ss,argv[0],PATHSIZE);
+
+  // now remove "/ds9.exe"
+  char* ptr = ss+strlen(ss);
+  while (*ptr != '/' && ptr != ss)
+    ptr--;
+  *ptr = '\0';
+
   // so that tcl and tk know where to find their libs
   // we do it here before InitLibraryPath is called
-  putenv((char*)"TCL_LIBRARY=zipfs:/mntpt/tcl8.6");
-  putenv((char*)"TK_LIBRARY=zipfs:/mntpt/tk8.6");
+  char rr[PATHSIZE+1];
+  memset(rr, 0, PATHSIZE+1);
+  char rp[PATHSIZE+1];
+  memset(rp, 0, PATHSIZE+1);
 
-  // startup script
-  Tcl_Obj *path = Tcl_NewStringObj("zipfs:/mntpt/library/ds9.tcl",-1);
+  strncpy(rr,ss,PATHSIZE);
+  strncat(rr,"/../lib/ds9/tcl8.6",PATHSIZE);
+  realpath(rr, rp);   // Absolute path
+  ostringstream str;
+  str << "TCL_LIBRARY=" << rp << ends;
+  strcpy(my_tcl_library_path, (char*)str.str().c_str());
+
+  // and add startup script
+  memset(rr, 0, PATHSIZE+1);
+  strncpy(rr,ss,PATHSIZE);
+  strncat(rr,"/../lib/ds9/library/ds9.tcl",PATHSIZE);
+  realpath(rr, rp);
+
+  Tcl_Obj *path = Tcl_NewStringObj(rp,-1);
+
   Tcl_SetStartupScript(path, NULL);
 
   return TCL_OK;
@@ -77,6 +110,11 @@ int SAOLocalMainHook(int* argcPtr, char*** argvPtr)
 
 int SAOAppInit(Tcl_Interp *interp)
 {
+
+  // This needs to happen in the Init code rather than the Main hook
+  putenv(my_tcl_library_path);
+
+
   // save interp for cputs function
   global_interp = interp;
 
@@ -89,20 +127,20 @@ int SAOAppInit(Tcl_Interp *interp)
 		     (Tcl_PackageInitProc*)NULL);
 
   // find current working directory, and set as mount point
-  {
-#ifdef ZIPFILE
-    ostringstream str;
-    str << (char *)Tcl_GetNameOfExecutable() 
-	<< ".zip" 
-	<<  ends;
-    if(TclZipfs_Mount(interp, "", (const char*)str.str().c_str(), NULL) != TCL_OK ){
-      cerr << "ERROR: Unable to open the auxiliary ds9 file 'ds9.zip'. If you moved the ds9 program from its original location, please also move the zip file to the same place." << endl;
-      exit(1);
-    }
-#else
-    TclZipfs_Mount(interp, "", (const char *)Tcl_GetNameOfExecutable(), NULL);
-#endif
-  }
+  //~ {
+//~ #ifdef ZIPFILE
+    //~ ostringstream str;
+    //~ str << (char *)Tcl_GetNameOfExecutable()
+	//~ << ".zip"
+	//~ <<  ends;
+    //~ if(TclZipfs_Mount(interp, "", (const char*)str.str().c_str(), NULL) != TCL_OK ){
+      //~ cerr << "ERROR: Unable to open the auxiliary ds9 file 'ds9.zip'. If you moved the ds9 program from its original location, please also move the zip file to the same place." << endl;
+      //~ exit(1);
+    //~ }
+//~ #else
+    //~ TclZipfs_Mount(interp, "", (const char *)Tcl_GetNameOfExecutable(), NULL);
+//~ #endif
+  //~ }
 
   // Tcl
   if (Tcl_Init(interp) == TCL_ERROR)
@@ -116,19 +154,19 @@ int SAOAppInit(Tcl_Interp *interp)
   // Tkblt
   if (Tkblt_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage(interp, "tkblt", Tkblt_Init, 
+  Tcl_StaticPackage(interp, "tkblt", Tkblt_Init,
 		    (Tcl_PackageInitProc*)NULL);
 
   // Tktable
   if (Tktable_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "Tktable", Tktable_Init, 
+  Tcl_StaticPackage (interp, "Tktable", Tktable_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tls
   if (Tls_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "tls", Tls_Init, 
+  Tcl_StaticPackage (interp, "tls", Tls_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tksao
@@ -152,25 +190,25 @@ int SAOAppInit(Tcl_Interp *interp)
   // Tclfitsy
   if (Tclfitsy_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "Tclfitsy", Tclfitsy_Init, 
+  Tcl_StaticPackage (interp, "Tclfitsy", Tclfitsy_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tkmpeg
   if (Tkmpeg_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "tkmpeg", Tkmpeg_Init, 
+  Tcl_StaticPackage (interp, "tkmpeg", Tkmpeg_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tksvg
   if (Tksvg_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "tksvg", Tksvg_Init, 
+  Tcl_StaticPackage (interp, "tksvg", Tksvg_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tkagif
   if (Tkagif_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "tkagif", Tkagif_Init, 
+  Tcl_StaticPackage (interp, "tkagif", Tkagif_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   // Tclxml
@@ -226,7 +264,7 @@ int SAOAppInit(Tcl_Interp *interp)
   // Signal_Ext
   if (Signal_ext_Init(interp) == TCL_ERROR)
     return TCL_ERROR;
-  Tcl_StaticPackage (interp, "signal", Signal_ext_Init, 
+  Tcl_StaticPackage (interp, "signal", Signal_ext_Init,
 		     (Tcl_PackageInitProc*)NULL);
 
   return TCL_OK;

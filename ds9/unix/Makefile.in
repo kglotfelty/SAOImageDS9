@@ -208,7 +208,7 @@ tkAppInit.o : tkAppInit.c
 tkAppInit.c : $(prefix)/tk$(TCL_VERSION)/unix/tkAppInit.c
 	cp $? .
 
-$(APPDIR) : 
+$(APPDIR) :
 	mkdir -p $@
 
 $(LIBDIR)/tcl$(TCL_VERSION) :
