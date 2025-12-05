@@ -1,0 +1,3 @@
+#!/bin/sh
+
+"${CONDA_PREFIX}/imager/ds9" "$@"
