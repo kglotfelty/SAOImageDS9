@@ -59,10 +59,6 @@ tk	: tk$(TCL_VERSION)/unix/Makefile
 tk$(TCL_VERSION)/unix/Makefile :
 	@echo ""
 	@echo "*** $@ ***"
-	echo "ZAPHOD"
-	env
-	echo ""
-	echo ""
 	cd tk$(TCL_VERSION)/unix; \
 	./configure \
 	$(TKFLAGS) \
