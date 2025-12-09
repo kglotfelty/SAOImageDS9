@@ -4482,10 +4482,10 @@ fi
 
   if test  x"${have_pthread}" = x"yes"; then
 
-printf "%s\n" "#define HAVE_LIBPTHREAD /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_LIBPTHREAD 1" >>confdefs.h
 
 
-printf "%s\n" "#define _REENTRANT /**/" >>confdefs.h
+printf "%s\n" "#define _REENTRANT 1" >>confdefs.h
 
     TLIB="-lpthread"
   else
@@ -5501,7 +5501,7 @@ fi
 
 if test x"${have_x}" = "xyes"; then
 
-printf "%s\n" "#define HAVE_XT /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_XT 1" >>confdefs.h
 
 fi
 
@@ -5675,14 +5675,14 @@ printf "%s\n" "Tcl support will utilize stubs library: $TCL_LIBS" >&6; }
 printf "%s\n" "Tcl support will utilize library: $TCL_LIBS" >&6; }
       fi
 
-printf "%s\n" "#define HAVE_TCL /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_TCL 1" >>confdefs.h
 
     else
       if test x"${with_tclconfig}" != x ; then
         TCL_CFLAGS="$TCL_INCLUDE_SPEC"
         TCL_LIBS="$TCL_LIB_SPEC"
 
-printf "%s\n" "#define HAVE_TCL /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_TCL 1" >>confdefs.h
 
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: warning: tcl.h not found with --with-tcl ... tcl build might fail" >&5
 printf "%s\n" "warning: tcl.h not found with --with-tcl ... tcl build might fail" >&6; }
@@ -5734,7 +5734,7 @@ printf "%s\n" "yes ($withval)" >&6; }
   GTK_CFLAGS="`pkg-config gtk+-2.0 --cflags` -DHAVE_GTK=1"
   GTK_LIBS="`pkg-config gtk+-2.0 --libs`"
 
-printf "%s\n" "#define HAVE_GTK /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_GTK 1" >>confdefs.h
 
 else
   GTK_CFLAGS=""
@@ -5753,7 +5753,7 @@ printf %s "checking $host_os configuration... " >&6; }
 case $host_os in
     *cygwin*|*Cygwin* )
 
-printf "%s\n" "#define HAVE_CYGWIN /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_CYGWIN 1" >>confdefs.h
 
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: flagging Cygwin" >&5
 printf "%s\n" "flagging Cygwin" >&6; }
@@ -5762,7 +5762,7 @@ printf "%s\n" "flagging Cygwin" >&6; }
         CFLAGS="$CFLAGS -mconsole"
 	EXTRA_LIBS="$EXTRA_LIBS -lwsock32"
 
-printf "%s\n" "#define HAVE_MINGW32 /**/" >>confdefs.h
+printf "%s\n" "#define HAVE_MINGW32 1" >>confdefs.h
 
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: flagging MinGW" >&5
 printf "%s\n" "flagging MinGW" >&6; }

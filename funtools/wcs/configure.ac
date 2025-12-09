@@ -124,7 +124,7 @@ PRE=""
 POST="|\& cat"
 case $host_os in
     *cygwin*|*Cygwin* )
-        AC_DEFINE([HAVE_CYGWIN], [], [go cygwin])
+        AC_DEFINE([HAVE_CYGWIN], [1], [go cygwin])
         AC_MSG_RESULT(flagging Cygwin)
 	PRE="sh -c {"
 	POST="}"
@@ -132,7 +132,7 @@ case $host_os in
     *mingw32*|*Mingw32*)
         CFLAGS="$CFLAGS -mconsole -D_WSTRING_DEFINED=1"
 	EXTRA_LIBS="$EXTRA_LIBS -lwsock32"
-        AC_DEFINE([HAVE_MINGW32], [], [go mingw32])
+        AC_DEFINE([HAVE_MINGW32], [1], [go mingw32])
         AC_MSG_RESULT(flagging MinGW)
         ;;
     *osf*|*Osf*)

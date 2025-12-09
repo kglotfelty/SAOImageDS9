@@ -1,5 +1,8 @@
 /* conf.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Have ygwin */
+#undef HAVE_CYGWIN
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -17,6 +20,9 @@
 
 /* Define to 1 if you have the 'memcpy' function. */
 #undef HAVE_MEMCPY
+
+/* have cygwin */
+#undef HAVE_MINGW32
 
 /* Define to 1 if you have the 'snprintf' function. */
 #undef HAVE_SNPRINTF

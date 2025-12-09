@@ -65,8 +65,8 @@ if test "$fun_ok" = "yes"; then
   AC_MSG_RESULT($fun_ok)
   AC_CHECK_LIB(pthread, pthread_create, have_pthread=yes)
   if test  x"${have_pthread}" = x"yes"; then
-    AC_DEFINE([HAVE_LIBPTHREAD], [], [Using libpthread])
-    AC_DEFINE([_REENTRANT], [], [Reentrant])
+    AC_DEFINE([HAVE_LIBPTHREAD], [1], [Using libpthread])
+    AC_DEFINE([_REENTRANT], [1], [Reentrant])
     TLIB="-lpthread"
   else
     AC_MSG_ERROR([no threads found ... cannot use enable-threaded-xpans], 1)
@@ -106,7 +106,7 @@ fi
 
 AC_PATH_XTRA
 if test x"${have_x}" = "xyes"; then
-    AC_DEFINE([HAVE_XT], [], [using x event loop])
+    AC_DEFINE([HAVE_XT], [1], [using x event loop])
 fi
 
 SC_PATH_TCLCONFIG
@@ -122,12 +122,12 @@ if test x"${no_tcl}" = x ; then
         TCL_LIBS="$TCL_LIB_SPEC"
         AC_MSG_RESULT([Tcl support will utilize library: $TCL_LIBS])
       fi
-      AC_DEFINE([HAVE_TCL], [], [with tcl support])
+      AC_DEFINE([HAVE_TCL], [1], [with tcl support])
     else
       if test x"${with_tclconfig}" != x ; then
         TCL_CFLAGS="$TCL_INCLUDE_SPEC"
         TCL_LIBS="$TCL_LIB_SPEC"
-        AC_DEFINE([HAVE_TCL], [], [with tcl support])
+        AC_DEFINE([HAVE_TCL], [1], [with tcl support])
         AC_MSG_RESULT([warning: tcl.h not found with --with-tcl ... tcl build might fail])
       else
         AC_MSG_RESULT([$TCL_PREFIX/include/tcl.h not found ... use --with-tcl to build tcl explicitly])
@@ -154,7 +154,7 @@ if test x"$havelib" = x1 ; then
   AC_MSG_RESULT(yes ($withval))
   GTK_CFLAGS="`pkg-config gtk+-2.0 --cflags` -DHAVE_GTK=1"
   GTK_LIBS="`pkg-config gtk+-2.0 --libs`"
-  AC_DEFINE([HAVE_GTK], [], [GTK event loop])
+  AC_DEFINE([HAVE_GTK], [1], [GTK event loop])
 else
   GTK_CFLAGS=""
   GTK_LIBS=""
@@ -169,13 +169,13 @@ LDFLAGS="$LDFLAGS $XLDFLAGS"
 AC_MSG_CHECKING([$host_os configuration])
 case $host_os in
     *cygwin*|*Cygwin* )
-        AC_DEFINE([HAVE_CYGWIN], [], [Building Cygwin])
+        AC_DEFINE([HAVE_CYGWIN], [1], [Building Cygwin])
         AC_MSG_RESULT([flagging Cygwin])
         ;;
     *mingw32*|*Mingw32*)
         CFLAGS="$CFLAGS -mconsole"
 	EXTRA_LIBS="$EXTRA_LIBS -lwsock32"
-        AC_DEFINE([HAVE_MINGW32], [], [Building minw32])
+        AC_DEFINE([HAVE_MINGW32], [1], [Building minw32])
         AC_MSG_RESULT([flagging MinGW])
         ;;
     *darwin*|*Darwin*)
