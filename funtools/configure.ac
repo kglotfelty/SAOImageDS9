@@ -21,10 +21,10 @@ AC_C_LONG_LONG
 
 AC_PROG_RANLIB
 
-m4_warn([obsolete],
-[The preprocessor macro `STDC_HEADERS' is obsolete.
-  Except in unusual embedded environments, you can safely include all
-  ISO C90 headers unconditionally.])dnl
+#~ m4_warn([obsolete],
+#~ [The preprocessor macro STDC_HEADERS is obsolete.
+  #~ Except in unusual embedded environments, you can safely include all
+  #~ ISO C90 headers unconditionally.])dnl
 # Autoupdate added the next two lines to ensure that your configure
 # script's behavior did not change.  They are probably safe to remove.
 AC_CHECK_INCLUDES_DEFAULT
@@ -54,16 +54,16 @@ AC_CHECK_FUNCS(strchr memcpy snprintf)
 AC_CHECK_FUNC(connect)
 if test $ac_cv_func_connect = no; then
   AC_CHECK_LIB(socket, connect,  EXTRA_LIBS="$EXTRA_LIBS -lsocket")
-fi                                                                          
+fi
 AC_CHECK_FUNC(gethostbyname)
 if test $ac_cv_func_gethostbyname = no; then
   AC_CHECK_LIB(nsl, gethostbyname, EXTRA_LIBS="$EXTRA_LIBS -lnsl")
-fi                                                                          
+fi
 # AC_CHECK_LIB(db, snprintf, EXTRA_LIBS="$EXTRA_LIBS -ldb")
 
 #
 # checks specific to this project
-# 
+#
 
 AC_MSG_CHECKING(for filter cc)
 AC_ARG_WITH(filter-cc, [ --with-filter-cc=CC  compiler],
@@ -107,7 +107,7 @@ if test "$fun_ok" != "no"; then
     if test "$have_dl" = yes; then
       using_shlib="yes"
       fpic="yes"
-      EXTRA_LIBS="$EXTRA_LIBS -ldl"  
+      EXTRA_LIBS="$EXTRA_LIBS -ldl"
       if test `$CC -v -rdynamic 2>&1 | grep -c unrecognized` = "0" ; then
         LDFLAGS="$LDFLAGS -rdynamic"
       fi
@@ -144,7 +144,7 @@ if test "$CC" = "gcc" -o `$CC -v 2>&1 | grep -c gcc` != "0" ; then
     if test "$have_dl" = yes; then
       USE_DL="-DUSE_DL=1"
       fpic="yes"
-      EXTRA_LIBS="$EXTRA_LIBS -ldl"  
+      EXTRA_LIBS="$EXTRA_LIBS -ldl"
       if test `$CC -v -rdynamic 2>&1 | grep -c unrecognized` = "0" ; then
         LDFLAGS="$LDFLAGS -rdynamic"
       fi

@@ -21,7 +21,6 @@ AC_C_LONG_LONG
 
 AC_PROG_RANLIB
 
-AC_HEADER_STDC
 AC_CHECK_HEADERS(malloc.h)
 AC_CHECK_HEADERS(getopt.h)
 AC_CHECK_HEADERS(values.h)
@@ -49,16 +48,16 @@ AC_CHECK_FUNCS(strchr memcpy snprintf ftello fseeko setenv)
 AC_CHECK_FUNC(connect)
 if test $ac_cv_func_connect = no; then
   AC_CHECK_LIB(socket, connect,  EXTRA_LIBS="$EXTRA_LIBS -lsocket")
-fi                                                                          
+fi
 AC_CHECK_FUNC(gethostbyname)
 if test $ac_cv_func_gethostbyname = no; then
   AC_CHECK_LIB(nsl, gethostbyname, EXTRA_LIBS="$EXTRA_LIBS -lnsl")
-fi                                                                          
+fi
 # AC_CHECK_LIB(db, snprintf, EXTRA_LIBS="$EXTRA_LIBS -ldb")
 
 #
 # checks specific to this project
-# 
+#
 
 AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0], [BIGENDIAN=1])
 AC_SUBST(BIGENDIAN)
@@ -99,7 +98,7 @@ if test "$CC" = "gcc" -o `$CC -v 2>&1 | grep -c gcc` != "0" ; then
   if test "$have_dl" = yes; then
     USE_DL="-DUSE_DL=1"
     fpic="yes"
-    EXTRA_LIBS="$EXTRA_LIBS -ldl"  
+    EXTRA_LIBS="$EXTRA_LIBS -ldl"
     if test `$CC -v -rdynamic 2>&1 | grep -c unrecognized` = "0" ; then
       LDFLAGS="$LDFLAGS -rdynamic"
     fi
@@ -146,7 +145,7 @@ PRE=""
 POST="|\& cat"
 case $host_os in
     *cygwin*|*Cygwin* )
-        AC_DEFINE([HAVE_CYGWIN])
+        AC_DEFINE([HAVE_CYGWIN], [], [go cygwin])
         AC_MSG_RESULT(flagging Cygwin)
 	PRE="sh -c {"
 	POST="}"
@@ -154,7 +153,7 @@ case $host_os in
     *mingw32*|*Mingw32*)
         CFLAGS="$CFLAGS -mconsole -D_WSTRING_DEFINED=1"
 	EXTRA_LIBS="$EXTRA_LIBS -lwsock32"
-        AC_DEFINE([HAVE_MINGW32])
+        AC_DEFINE([HAVE_MINGW32], [], [go mingw32])
         AC_MSG_RESULT(flagging MinGW)
         ;;
     *osf*|*Osf*)

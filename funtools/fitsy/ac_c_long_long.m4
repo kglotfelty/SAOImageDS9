@@ -26,7 +26,7 @@ AC_DEFUN([AC_C_LONG_LONG],
 [if test "$GCC" = yes; then
   ac_cv_c_long_long=yes
   else
-        AC_TRY_COMPILE(,[long long int i;],
+        AC_COMPILE_IFELSE(,[long long int i;],
    ac_cv_c_long_long=yes,
    ac_cv_c_long_long=no)
    fi])
