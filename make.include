@@ -210,7 +210,7 @@ xpa/Makefile :
 	$(WITHTCL) \
 	$(PREFIX) \
 	$(STD) \
-	--with-x=disabled
+	--without-x
 
 #-------------------------- tkblt
 
@@ -671,8 +671,8 @@ xpaclean :
 .PHONY	: dirsdistclean ds9distclean localdistclean
 .PHONY	: openssldistclean
 .PHONY	: tclxmldistclean tclxmlrpcdistclean tlsdistclean
-.PHONY	: tkbltdistclean tclfitsydistclean tkcondistclean tkhtml1distclean 
-.PHONY	: tkimgdistclean tkmpegdistclean tksvgdistclean tkagifdistclean 
+.PHONY	: tkbltdistclean tclfitsydistclean tkcondistclean tkhtml1distclean
+.PHONY	: tkimgdistclean tkmpegdistclean tksvgdistclean tkagifdistclean
 .PHONY	: tktabledistclean xpadistclean
 .PHONY	: vectordistclean fitsydistclean
 .PHONY	: astdistclean funtoolsdistclean
@@ -704,7 +704,7 @@ localdistclean :
 	@echo ""
 	@echo "*** $@ ***"
 	-rm -f core *~ *#
-	-rm -f config.log config.status config.cache Makefile 
+	-rm -f config.log config.status config.cache Makefile
 
 openssldistclean :
 	@echo ""
@@ -761,12 +761,12 @@ tkhtml1distclean:
 	$(MAKE) -C tkhtml1 distclean
 	rm -f tkhtml1/tkhtml1Config.sh
 
-tkimgdistclean: 
+tkimgdistclean:
 	@echo ""
 	@echo "*** $@ ***"
 	$(MAKE) -C tkimg distclean
-	find tkimg -name "pkgIndex.tcl" -exec rm {} \;		
-	find tkimg -name "*Config.sh" -exec rm {} \;		
+	find tkimg -name "pkgIndex.tcl" -exec rm {} \;
+	find tkimg -name "*Config.sh" -exec rm {} \;
 	rm -rf $(TKIMGTMPFILES)
 
 tkmpegdistclean:
