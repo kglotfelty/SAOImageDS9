@@ -149,7 +149,7 @@ proc CreateCanvas {} {
 				   ]
 	grid $ds9(canvas,bottom) -row 1 -column 0 -sticky ew
     }
-	
+
     # needed to realize window so Layout routines will work
     grid $ds9(image)
 
@@ -162,7 +162,7 @@ proc CreateCanvas {} {
 
 proc ThemeConfigCanvas {w} {
     global ds9
-    
+
     $w configure -bg [ThemeTreeBackground]
 
     $w itemconfigure colorbar -fg [ThemeTreeForeground]
@@ -199,7 +199,7 @@ proc BindEventsCanvas {} {
     bind $ds9(canvas) <Tab> [list NextFrame]
     bind $ds9(canvas) <Shift-Tab> [list PrevFrame]
     switch $ds9(wm) {
-	x11 {bind $ds9(canvas) <ISO_Left_Tab> [list PrevFrame]} 
+	x11 {bind $ds9(canvas) <ISO_Left_Tab> [list PrevFrame]}
 	aqua -
 	win32 {}
     }
@@ -231,7 +231,7 @@ proc BindEventsCanvas {} {
 	    bind $ds9(canvas) <Button-3> {Button3Canvas %x %y}
 	    bind $ds9(canvas) <B3-Motion> {Motion3Canvas %x %y}
 	    bind $ds9(canvas) <ButtonRelease-3> {Release3Canvas %x %y}
-	} 
+	}
 	aqua {
 	    # swap button-2 and button-3 on the mighty mouse
 	    bind $ds9(canvas) <Button-2> {Button3Canvas %x %y}
@@ -244,6 +244,9 @@ proc BindEventsCanvas {} {
 	    bind $ds9(canvas) <Command-ButtonRelease-1> {Release3Canvas %x %y}
 	}
     }
+
+    BindDropEvents
+
 }
 
 proc UnBindEventsCanvas {} {
@@ -285,7 +288,7 @@ proc UnBindEventsCanvas {} {
 	    bind $ds9(canvas) <Button-3> {}
 	    bind $ds9(canvas) <B3-Motion> {}
 	    bind $ds9(canvas) <ButtonRelease-3> {}
-	} 
+	}
 	aqua {
 	    # swap button-2 and button-3 on the mighty mouse
 	    bind $ds9(canvas) <Button-2> {}
@@ -579,7 +582,7 @@ proc LayoutViewAdvanced {} {
 	grid $ds9(icons,bottom,sep) -row 3 -column 0 -sticky ew -columnspan 7
 	grid $ds9(icons,bottom) -row 4 -column 0 -sticky ew -columnspan 7
     }
-    
+
     # image
     grid $ds9(image) -row 2 -column 2 -sticky news
 }
@@ -590,7 +593,7 @@ proc LayoutFrames {} {
     global tile
     global view
     global colorbar
-    
+
     # turn off default colorbar
     colorbar hide
 
@@ -643,7 +646,7 @@ proc LayoutFramesNone {} {
     global current
     global colorbar
     global view
-    
+
     set current(frame) {}
     set current(colorbar) colorbar
 
@@ -668,7 +671,7 @@ proc LayoutFramesNone {} {
 #	    $ds9(canvas) raise colorbar
 	}
     }
-    
+
     # graphs
     if {$view(graph,horz)} {
 	LayoutGraphHorz graph 0 0 \
@@ -904,11 +907,11 @@ proc TileRectNone {numx numy} {
     global current
     global view
     global colorbar
-    
+
     set fw [winfo width $ds9(canvas)]
     set fh [winfo height $ds9(canvas)]
     LayoutFrameAdjust fw fh
-    
+
     set ww [expr int(($fw-($tile(grid,gap)*($numx-1)))/$numx)]
     set hh [expr int(($fh-($tile(grid,gap)*($numy-1)))/$numy)]
 
@@ -950,13 +953,13 @@ proc TileRectNone {numx numy} {
 	    LayoutColorbar ${ff}cb 0 0 \
 		[winfo width $ds9(canvas)] [winfo height $ds9(canvas)]
 	}
-	
+
 	if {$view(graph,horz)} {
 	    LayoutGraphHorz $ff 0 0 \
 		[winfo width $ds9(canvas)] [winfo height $ds9(canvas)]
 	    UpdateGraphAxis $ff horz
 	}
-	
+
 	if {$view(graph,vert)} {
 	    LayoutGraphVert $ff 0 0 \
 		[winfo width $ds9(canvas)] [winfo height $ds9(canvas)]
@@ -1103,7 +1106,7 @@ proc LayoutChangeWidth {ww} {
 
 proc LayoutChangeHeight {hh} {
     global ds9
-    
+
     set ch [winfo height $ds9(canvas)]
     set tw [winfo width $ds9(top)]
     set th [winfo height $ds9(top)]
@@ -1116,7 +1119,7 @@ proc LayoutChangeHeight {hh} {
 
 proc LayoutChangeSize {ww hh} {
     global ds9
-    
+
     set cw [winfo width $ds9(canvas)]
     set ch [winfo height $ds9(canvas)]
     set tw [winfo width $ds9(top)]
@@ -1150,7 +1153,7 @@ proc DisplayDefaultDialog {} {
     ttk::entry $f.y -textvariable ed(y) -width 10
     ttk::label $f.xunit -text [msgcat::mc {Pixels}]
     ttk::label $f.yunit -text [msgcat::mc {Pixels}]
-    
+
     grid $f.xTitle $f.x $f.xunit -padx 2 -pady 2 -sticky w
     grid $f.yTitle $f.y $f.yunit -padx 2 -pady 2 -sticky w
 
