@@ -146,7 +146,8 @@ PREQS	= \
 	$(LIBDIR)/tooltip \
 	$(LIBDIR)/awthemes \
 	$(LIBDIR)/ttkthemes \
-	$(LIBDIR)/scidthemes
+	$(LIBDIR)/scidthemes \
+	$(LIBDIR)/tkdnd
 
 #--------------------------main
 
@@ -208,7 +209,7 @@ tkAppInit.o : tkAppInit.c
 tkAppInit.c : $(prefix)/tk$(TCL_VERSION)/unix/tkAppInit.c
 	cp $? .
 
-$(APPDIR) : 
+$(APPDIR) :
 	mkdir -p $@
 
 $(LIBDIR)/tcl$(TCL_VERSION) :

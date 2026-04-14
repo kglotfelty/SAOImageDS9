@@ -35,7 +35,7 @@ saods9	: dirs tcl tk \
 	tclzipfs tls tclxml tclxmlrpc \
 	tkblt tclfitsy tktable tkimg \
 	tkmpeg tksvg tkagif tkhtml1 tkcon \
-	tksao ds9
+	tkdnd tksao ds9
 
 tcl	: tcl$(TCL_VERSION)/unix/Makefile
 	@echo ""
@@ -99,6 +99,20 @@ tclsignal/Makefile :
 	$(PREFIX) \
 	$(STD) \
 	$(CACHE)
+
+# ----------- tkdnd
+
+tkdnd: tkdnd/Makefile
+	@echo ""
+	@echo "*** $@ ***"
+	$(MAKE) -C tkdnd install
+
+tkdnd/Makefile:
+	@echo ""
+	@echo "*** $@ ***"
+	cd tkdnd; \
+	./configure $(WITHTK)
+
 
 #--------------------------clean
 
