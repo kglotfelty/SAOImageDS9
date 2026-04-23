@@ -145,7 +145,8 @@ PREQS	= \
 	$(LIBDIR)/textutil \
 	$(LIBDIR)/math \
 	$(LIBDIR)/tooltip \
-	$(LIBDIR)/xpans
+	$(LIBDIR)/xpans \
+	$(LIBDIR)/tkdnd
 
 #--------------------------main
 
