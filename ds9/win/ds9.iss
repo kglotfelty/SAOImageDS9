@@ -33,10 +33,10 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
-; Remove the following line to run in administrative install mode (install for all users).
+; Remove the following line to run in administrative install mode  (install for all users).
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=.\dist
+OutputDir=..\..\dist
 OutputBaseFilename=ds9
 SetupIconFile=..\..\ds9\win\ds9.ico
 SolidCompression=yes
